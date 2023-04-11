@@ -1,6 +1,9 @@
+using CommandsApi.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<ICommandsAPIRepo, MockCommandAPIRepo>();
 
 var app = builder.Build();
 

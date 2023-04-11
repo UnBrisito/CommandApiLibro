@@ -17,27 +17,34 @@ namespace CommandsApi.Data
         public IEnumerable<Comando> GetAllCommands()
         {
             var commands = new List<Comando>
- {
- new Comando{
- Id=0, HowTo="How to generate a migration",
- CommandLine="dotnet ef migrations add <Name of Migration>",
- Platform=".Net Core EF"},
- new Comando{
- Id=1, HowTo="Run Migrations",
- CommandLine="dotnet ef database update",
- Platform=".Net Core EF"},
- new Comando{
- Id=2, HowTo="List active migrations",
- CommandLine="dotnet ef migrations list",
- Platform=".Net Core EF"}
- };
+            {
+                 new Comando{
+                 Id=0, HowTo="How to generate a migration",
+                 CommandLine="dotnet ef migrations add <Name of Migration>",
+                 Platform=".Net Core EF"},
+                 new Comando{
+                 Id=1, HowTo="Run Migrations",
+                 CommandLine="dotnet ef database update",
+                 Platform=".Net Core EF"},
+                 new Comando{
+                 Id=2, HowTo="List active migrations",
+                 CommandLine="dotnet ef migrations list",
+                 Platform=".Net Core EF"}
+            };
             return commands;
         }
 
         public Comando GetCommandById(int id)
         {
-            throw new NotImplementedException();
+            return new Comando
+            {
+                Id = 0,
+                HowTo = $"How to {id} generate a migration",
+                CommandLine = "dotnet ef migrations add <Name of Migration>",
+                Platform = ".Net Core EF"
+            };
         }
+    
 
         public bool SaveChanges()
         {
