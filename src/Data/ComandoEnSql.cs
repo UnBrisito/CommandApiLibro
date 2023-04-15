@@ -12,12 +12,14 @@ namespace CommandsApi.Data
         }
         public void CreateCommand(Comando cmd)
         {
-            throw new NotImplementedException();
+            if (cmd == null) throw new ArgumentNullException(nameof(cmd));
+            _context.MisComandos.Add(cmd);
         }
 
         public void DeleteCommand(Comando cmd)
         {
-            throw new NotImplementedException();
+            if (cmd == null) throw new ArgumentNullException(nameof(cmd));
+            _context.MisComandos.Remove(cmd);
         }
 
         public IEnumerable<Comando> GetAllCommands()
@@ -32,12 +34,11 @@ namespace CommandsApi.Data
 
         public bool SaveChanges()
         {
-            throw new NotImplementedException();
+            return _context.SaveChanges() >=0 ;
         }
 
         public void UpdateCommand(Comando cmd)
         {
-            throw new NotImplementedException();
         }
     }
 }

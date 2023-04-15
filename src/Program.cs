@@ -2,6 +2,8 @@ using CommandsApi.Data;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using AutoMapper;
+using Newtonsoft.Json.Serialization;
 
 //public IConfiguration Configuration { get; } esto ya no funciona
 
@@ -17,6 +19,8 @@ builder.Services.AddDbContext<ComandoContext>(opt => opt.UseSqlServer(strBuilder
 builder.Services.AddControllers();
 //builder.Services.AddScoped<ICommandsAPIRepo, MockCommandAPIRepo>(); //La implementación falsa
 builder.Services.AddScoped<ICommandsAPIRepo, ComandoEnSql>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddControllers().AddNewtonsoftJson(s => new CamelCasePropertyNamesContractResolver());
 
 var app = builder.Build();
 
