@@ -11,12 +11,19 @@ using Microsoft.AspNetCore.Hosting;
 var builder = WebApplication.CreateBuilder(args);
 //Construir la cadena de conexión con los datos de secrets.json
 var strBuilder = new SqlConnectionStringBuilder();
+
 strBuilder.ConnectionString = builder.Configuration.GetConnectionString("SqlServerConnection");
 strBuilder.UserID = builder.Configuration["userId"];
 strBuilder.Password = builder.Configuration["password"];
 
-
-builder.Services.AddDbContext<ComandoContext>(opt => opt.UseSqlServer(strBuilder.ConnectionString));
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddDbContext<ComandoContext>(opt => opt.UseSqlServer(strBuilder.ConnectionString));
+}
+else
+{
+    builder.Services.AddDbContext<ComandoContext>(opt => opt.UseNpgsql(strBuilder.ConnectionString));
+}
 builder.Services.AddControllers();
 //builder.Services.AddScoped<ICommandsAPIRepo, MockCommandAPIRepo>(); //La implementación falsa
 builder.Services.AddScoped<ICommandsAPIRepo, ComandoEnSql>();
@@ -25,11 +32,16 @@ builder.Services.AddControllers().AddNewtonsoftJson(s => new CamelCasePropertyNa
 
 
 var app = builder.Build();
-//********************************************
-//Para poder usarlo con la wifi
-//builder.Host.ConfigureWebHostDefaults(b => b.UseUrls(@"https://0.0.0.0:8080"));
 
-//********************************
+//var context = app.Services.GetRequiredService<ComandoEnSql>(); No sé por qué no se puede hacer así
+//context.Database.Migrate();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<ComandoContext>();
+    context.Database.Migrate();
+}
 
 app.UseHttpsRedirection();
 //app.MapGet("/", () => "Hello World!");
