@@ -24,8 +24,8 @@
     </PackageReference>
   </ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="C:\Users\alvar\source\LibroApi\CommandsApiSol\src\CommandsApi.csproj" />
 		<ProjectReference Include="..\src\CommandsApi.csproj" />
 	</ItemGroup>
+
 
 </Project>
