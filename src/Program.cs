@@ -12,18 +12,24 @@ var builder = WebApplication.CreateBuilder(args);
 //Construir la cadena de conexión con los datos de secrets.json
 var strBuilder = new SqlConnectionStringBuilder();
 
-strBuilder.ConnectionString = builder.Configuration.GetConnectionString("SqlServerConnection");
-Console.WriteLine("punto de control 1.1");
-strBuilder.UserID = builder.Configuration["userId"];
-strBuilder.Password = builder.Configuration["password"];
-Console.WriteLine("punto de control 2");
+
 if (builder.Environment.IsDevelopment())
 {
+    strBuilder.ConnectionString = builder.Configuration.GetConnectionString("SqlServerConnection");
+    Console.WriteLine("punto de control 1.1");
+    strBuilder.UserID = builder.Configuration["userId"];
+    strBuilder.Password = builder.Configuration["password"];
+    Console.WriteLine("punto de control 2");
     Console.WriteLine("punto de control isdevelopment() -> true");
     builder.Services.AddDbContext<ComandoContext>(opt => opt.UseSqlServer(strBuilder.ConnectionString));
 }
 else
 {
+    strBuilder.ConnectionString = builder.Configuration["SqlServerConnection"];
+    Console.WriteLine("punto de control 1.1");
+    strBuilder.UserID = builder.Configuration["userId"];
+    strBuilder.Password = builder.Configuration["password"];
+    Console.WriteLine("punto de control 2");
     Console.WriteLine("punto de control isdevelopment() -> false");
     builder.Services.AddDbContext<ComandoContext>(opt => opt.UseNpgsql(strBuilder.ConnectionString));
 }
