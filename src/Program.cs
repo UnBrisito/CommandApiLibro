@@ -28,13 +28,13 @@ if (builder.Environment.IsDevelopment())
 }
 else
 {
+    Console.WriteLine("punto de control isdevelopment() -> false");
     var strBuilder = new NpgsqlConnectionStringBuilder();
     strBuilder.ConnectionString = builder.Configuration.GetConnectionString("SqlServerConnection");
     Console.WriteLine("punto de control 1.1");
     strBuilder.Username = builder.Configuration["userId"];
     strBuilder.Password = builder.Configuration["password"];
     Console.WriteLine("punto de control 2");
-    Console.WriteLine("punto de control isdevelopment() -> false");
     builder.Services.AddDbContext<ComandoContext>(opt => opt.UseNpgsql(strBuilder.ConnectionString));
 }
 Console.WriteLine("punto de control 3");
