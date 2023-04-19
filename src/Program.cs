@@ -29,9 +29,7 @@ if (builder.Environment.IsDevelopment())
 else
 {
     var strBuilder = new NpgsqlConnectionStringBuilder();
-    string connStr = builder.Configuration.GetConnectionString("SqlServerConnection");
-    Console.WriteLine(connStr);
-    strBuilder.ConnectionString = connStr;
+    strBuilder.ConnectionString = builder.Configuration.GetConnectionString("SqlServerConnection");
     Console.WriteLine("punto de control 1.1");
     strBuilder.Username = builder.Configuration["userId"];
     strBuilder.Password = builder.Configuration["password"];
