@@ -27,6 +27,7 @@ if (builder.Environment.IsDevelopment())
 else
 {
     string connStr = builder.Configuration.GetConnectionString("SqlServerConnection");
+    Console.WriteLine(connStr);
     strBuilder.ConnectionString += connStr;
     Console.WriteLine("punto de control 1.1");
     strBuilder.UserID = builder.Configuration["userId"];
