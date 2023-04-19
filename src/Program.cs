@@ -15,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 
-if (builder.Environment.IsDevelopment())
+if (!builder.Environment.IsDevelopment())
 {
     var strBuilder = new SqlConnectionStringBuilder();
     strBuilder.ConnectionString = builder.Configuration.GetConnectionString("SqlServerConnection");
@@ -30,10 +30,13 @@ else
 {
     Console.WriteLine("punto de control isdevelopment() -> false");
     var strBuilder = new NpgsqlConnectionStringBuilder();
-    strBuilder.ConnectionString = builder.Configuration.GetConnectionString("SqlServerConnection");
+    //strBuilder.ConnectionString = builder.Configuration.GetConnectionString("SqlServerConnection");
+    strBuilder.ConnectionString = "Host=cmdapipgsql.fde2hkevbxbrh4d6.eastus.azurecontainer.io;Port=5432;Database=CmdAPI;Pooling=true;";
     Console.WriteLine("punto de control 1.1");
-    strBuilder.Username = builder.Configuration["userId"];
-    strBuilder.Password = builder.Configuration["password"];
+    //strBuilder.Username = builder.Configuration["userId"];
+    //strBuilder.Password = builder.Configuration["password"];
+    strBuilder.Username = "cmddbuser";
+    strBuilder.Password = "pa55w0rd!";
     Console.WriteLine("punto de control 2");
     builder.Services.AddDbContext<ComandoContext>(opt => opt.UseNpgsql(strBuilder.ConnectionString));
 }
