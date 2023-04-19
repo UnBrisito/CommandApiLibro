@@ -5,17 +5,19 @@ using Microsoft.Extensions.Configuration;
 using AutoMapper;
 using Newtonsoft.Json.Serialization;
 using Microsoft.AspNetCore.Hosting;
+using Npgsql;
 
 //public IConfiguration Configuration { get; } esto ya no funciona
 Console.WriteLine("punto de control 1.0");
 var builder = WebApplication.CreateBuilder(args);
 //Construir la cadena de conexión con los datos de secrets.json
-var strBuilder = new SqlConnectionStringBuilder();
+
 
 
 
 if (builder.Environment.IsDevelopment())
 {
+    var strBuilder = new SqlConnectionStringBuilder();
     strBuilder.ConnectionString = builder.Configuration.GetConnectionString("SqlServerConnection");
     Console.WriteLine("punto de control 1.1");
     strBuilder.UserID = builder.Configuration["userId"];
@@ -26,11 +28,12 @@ if (builder.Environment.IsDevelopment())
 }
 else
 {
+    var strBuilder = new NpgsqlConnectionStringBuilder();
     string connStr = builder.Configuration.GetConnectionString("SqlServerConnection");
     Console.WriteLine(connStr);
-    strBuilder.ConnectionString += connStr;
+    strBuilder.ConnectionString = connStr;
     Console.WriteLine("punto de control 1.1");
-    strBuilder.UserID = builder.Configuration["userId"];
+    strBuilder.Username = builder.Configuration["userId"];
     strBuilder.Password = builder.Configuration["password"];
     Console.WriteLine("punto de control 2");
     Console.WriteLine("punto de control isdevelopment() -> false");
