@@ -6,6 +6,7 @@ using CommandsApi.Dots;
 using System.Collections.Generic;
 using Azure;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Authorization;
 
 namespace comandapivs.Controllers
 {
@@ -22,6 +23,7 @@ namespace comandapivs.Controllers
             _mapper = mapper;
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<ComandoReadDto>> Get()
         {

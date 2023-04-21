@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -15,11 +14,11 @@ namespace CommandsApi.Migrations
                 name: "MisComandos",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    HowTo = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
-                    Platform = table.Column<string>(type: "text", nullable: false),
-                    CommandLine = table.Column<string>(type: "text", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HowTo = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    Platform = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CommandLine = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
