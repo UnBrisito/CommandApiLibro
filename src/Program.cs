@@ -38,13 +38,17 @@ var app = builder.Build();
 
 //var context = app.Services.GetRequiredService<ComandoEnSql>(); No sé por qué no se puede hacer así
 //context.Database.Migrate();
-using (var scope = app.Services.CreateScope())
+if (builder.Environment.IsDevelopment())
 {
-    var services = scope.ServiceProvider;
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
 
-    var context = services.GetRequiredService<ComandoContext>();
-    context.Database.Migrate();
+        var context = services.GetRequiredService<ComandoContext>();
+        context.Database.Migrate();
+    }
 }
+
 app.UseHttpsRedirection();
 //app.MapGet("/", () => "Hello World!");
 //app.UseEndpoints(endpoints => endpoints.MapControllers()); esto ya no funciona
