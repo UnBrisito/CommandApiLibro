@@ -23,7 +23,6 @@ namespace comandapivs.Controllers
             _mapper = mapper;
         }
 
-        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<ComandoReadDto>> Get()
         {
